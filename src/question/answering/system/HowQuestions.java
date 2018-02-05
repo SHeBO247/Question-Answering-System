@@ -11,7 +11,7 @@ public class HowQuestions {
         // Split All Question to only when question
         for (int i = 0; i < questionList.size(); i++){
             if (questionList.get(i).question.startsWith("How")){
-                howQuestions.add(new Question(questionList.get(i).question, questionList.get(i).answer));
+                howQuestions.add(new Question(questionList.get(i).id, questionList.get(i).question, questionList.get(i).answer));
             }
         }
 
@@ -28,7 +28,7 @@ public class HowQuestions {
                 for (int c = 0; c < questionEntities.size(); c++){
                     for (int i = 0; i < howQuestions.size(); i++){
                         if (howQuestions.get(i).question.contains(questionEntities.get(c))){
-                            answers.add(new Question(howQuestions.get(i).question, howQuestions.get(i).answer));
+                            answers.add(new Question(howQuestions.get(i).id, howQuestions.get(i).question, howQuestions.get(i).answer));
                         }
                     }
                 }
@@ -38,7 +38,7 @@ public class HowQuestions {
                     for (int c = 0; c < questionTags.size(); c++){
                         for (int i = 0; i < howQuestions.size(); i++){
                             if (howQuestions.get(i).question.contains(questionTags.get(c))){
-                                answers.add(new Question(howQuestions.get(i).question, howQuestions.get(i).answer));
+                                answers.add(new Question(howQuestions.get(i).id, howQuestions.get(i).question, howQuestions.get(i).answer));
                             }
                         }
                     }
@@ -51,34 +51,28 @@ public class HowQuestions {
         }
 
         // Print All Entities Questions
-        System.out.println("Questions of 'Where' that have entities and tags :");
+        System.out.println("Questions of 'How' that have entities and tags :");
+        for (int i = 0; i < answers.size(); i++){
+            for (int j = 1; j < answers.size(); j++){
+                if (answers.get(i).id == answers.get(j).id){
+                    answers.remove(j);
+                }
+            }
+        }
+        
         for (int i = 0; i < answers.size(); i++){
             System.out.println(answers.get(i).question);
         }
 
 
         //==== Question Tags ====
-        //int i = 0;
-        //while (i < questionTags.size()){
         for (int i = 0; i < questionTags.size(); i++){
-            if (!answers.isEmpty()){
-                for (int k = 0; k < answers.size(); k++){
-                    if (answers.get(k).question.contains(questionTags.get(i))){
-                        continue;
-                    }
-                    else{
-                        answers.remove(k);
-                    }
+            for (int k = 0; k < answers.size(); k++){
+                if (answers.get(k).question.contains(questionTags.get(i))){
+                    continue;
                 }
-            }
-            else{
-                for (int k = 0; k < howQuestions.size(); k++){
-                    if (howQuestions.get(k).question.contains(questionTags.get(i))){
-                        continue;
-                    }
-                    else{
-                        howQuestions.remove(k);
-                    }
+                else{
+                    answers.remove(k);
                 }
             }
         }
